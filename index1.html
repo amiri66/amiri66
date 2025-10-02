@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login • Sign Up • Registered — Single File</title>
+  <style>
+    :root{--bg:#f4f7fb;--card:#ffffff;--accent:#4f46e5;--muted:#6b7280}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:linear-gradient(180deg, #eef2ff 0%, var(--bg) 100%); color:#0f172a}
+    .wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px}
+    .card{width:100%;max-width:960px;background:var(--card);border-radius:12px;box-shadow:0 10px 30px rgba(15,23,42,0.08);display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+    .panel{padding:32px}
+    .left{background:linear-gradient(180deg,#eef2ff,#eef4ff);display:flex;flex-direction:column;gap:16px;align-items:center;justify-content:center}
+    h1{margin:0;font-size:20px}
+    p.lead{color:var(--muted);margin:0}
+    form{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+    label{font-size:13px;color:var(--muted)}
+    input[type=text],input[type=email],input[type=password]{padding:10px 12px;border-radius:8px;border:1px solid #e6edf3;font-size:14px}
+    button{cursor:pointer;padding:10px 12px;border-radius:8px;border:0;background:var(--accent);color:white;font-weight:600}
+    .alt{background:transparent;border:1px solid #eef2ff;color:var(--accent)}
+    .switch{display:flex;gap:8px;align-items:center}
+    .muted{color:var(--muted);font-size:13px}
+    .small{font-size:13px}
+    .footer{margin-top:8px}
+    .nav{display:flex;gap:8px}
+    .link{background:transparent;border:0;color:var(--accent);cursor:pointer;padding:6px;border-radius:6px}
+    .hidden{display:none}
+    .users-list{max-height:220px;overflow:auto;padding:8px;border-radius:8px;border:1px dashed #e6edf3;background:linear-gradient(180deg, #fff, #fbfdff)}
+    .user-item{display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #f1f5f9;font-size:14px}
+    .center{display:flex;align-items:center;justify-content:center}
+    @media (max-width:800px){.card{grid-template-columns:1fr}.left{padding:18px}.panel{padding:18px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="application">
+      <div class="panel left">
+        <h1>Welcome back 👋</h1>
+        <p class="lead">Fast demo of Login, Sign up and Registered users — single HTML file.
+        </p>
+        <div style="width:100%;max-width:300px;text-align:left">
+          <p class="small muted">Registered users (local demo)</p>
+          <div id="usersList" class="users-list" aria-live="polite"></div>
+          <div class="footer muted small">Note: users stored in your browser (localStorage) and hashed with SHA-256.</div>
+        </div>
+      </div>
+
+      <div class="panel right">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <button id="showLogin" class="link">Login</button>
+            <button id="showSignup" class="link">Sign up</button>
+          </div>
+          <div class="muted small">No server required • Demo only</div>
+        </div>
+
+        <section id="loginView">
+          <h2>Log in</h2>
+          <form id="loginForm">
+            <div>
+              <label for="loginEmail">Email</label>
+              <input id="loginEmail" type="email" required placeholder="you@example.com" />
+            </div>
+            <div>
+              <label for="loginPassword">Password</label>
+              <input id="loginPassword" type="password" required placeholder="Your password" />
+            </div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <input id="remember" type="checkbox" /> <label for="remember" class="small">Remember me</label>
+            </div>
+            <div style="display:flex;gap:8px">
+              <button type="submit">Sign in</button>
+              <button type="button" class="alt" id="toSignup">Create account</button>
+            </div>
+            <div id="loginMsg" class="muted small"></div>
+          </form>
+        </section>
+
+        <section id="signupView" class="hidden">
+          <h2>Create account</h2>
+          <form id="signupForm">
+            <div>
+              <label for="name">Full name</label>
+              <input id="name" type="text" required placeholder="Your name" />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" type="email" required placeholder="you@example.com" />
+            </div>
+            <div>
+              <label for="password">Password</label>
+              <input id="password" type="password" required placeholder="Create a password (min 6)" />
+            </div>
+            <div>
+              <label for="confirm">Confirm password</label>
+              <input id="confirm" type="password" required placeholder="Repeat password" />
+            </div>
+            <div style="display:flex;gap:8px">
+              <button type="submit">Sign up</button>
+              <button type="button" class="alt" id="toLogin">Already have an account</button>
+            </div>
+            <div id="signupMsg" class="muted small"></div>
+          </form>
+        </section>
+
+        <section id="dashboardView" class="hidden">
+          <h2>You're signed in</h2>
+          <p id="welcome" class="muted"></p>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button id="logout">Sign out</button>
+            <button id="deleteAccount" class="alt">Delete account</button>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const qs = sel => document.querySelector(sel);
+    const qsa = sel => document.querySelectorAll(sel);
+
+    async function sha256Hex(str){
+      const enc = new TextEncoder();
+      const data = enc.encode(str);
+      const hash = await crypto.subtle.digest('SHA-256', data);
+      const bytes = new Uint8Array(hash);
+      return Array.from(bytes).map(b => b.toString(16).padStart(2,'0')).join('');
+    }
+
+    const LS_KEY = 'demo_auth_users_v1';
+
+    function loadUsers(){
+      try{ const raw = localStorage.getItem(LS_KEY); return raw? JSON.parse(raw): {} }catch(e){return {}};
+    }
+    function saveUsers(obj){ localStorage.setItem(LS_KEY, JSON.stringify(obj)); }
+
+    function renderUsersList(){
+      const users = loadUsers();
+      const el = qs('#usersList');
+      el.innerHTML = '';
+      const keys = Object.keys(users);
+      if(!keys.length){ el.innerHTML = '<div class="center muted">No users yet</div>'; return; }
+      keys.forEach(email=>{
+        const item = document.createElement('div'); item.className='user-item';
+        item.innerHTML = `<div>${users[email].name}</div><div class="muted">${email}</div>`;
+        el.appendChild(item);
+      });
+    }
+
+    function showView(id){ qsa('section').forEach(s=>s.classList.add('hidden')); qs(id).classList.remove('hidden'); }
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+      renderUsersList();
+
+      qs('#showLogin').addEventListener('click', ()=> showView('#loginView'));
+      qs('#showSignup').addEventListener('click', ()=> showView('#signupView'));
+      qs('#toSignup').addEventListener('click', ()=> showView('#signupView'));
+      qs('#toLogin').addEventListener('click', ()=> showView('#loginView'));
+
+      qs('#signupForm').addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const name = qs('#name').value.trim();
+        const email = qs('#email').value.trim().toLowerCase();
+        const pw = qs('#password').value;
+        const confirm = qs('#confirm').value;
+        const msg = qs('#signupMsg'); msg.textContent='';
+        if(!name || !email || !pw){ msg.textContent='Please fill all fields.'; return }
+        if(pw.length < 6){ msg.textContent='Password must be at least 6 characters.'; return }
+        if(pw !== confirm){ msg.textContent='Passwords do not match.'; return }
+        const users = loadUsers();
+        if(users[email]){ msg.textContent='An account with that email already exists.'; return }
+        const hashed = await sha256Hex(pw);
+        users[email] = { name, hash: hashed, created: new Date().toISOString() };
+        saveUsers(users);
+        renderUsersList();
+        msg.textContent = 'Account created — you can now log in.';
+        qs('#signupForm').reset();
+        setTimeout(()=> showView('#loginView'), 800);
+      });
+
+      qs('#loginForm').addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const email = qs('#loginEmail').value.trim().toLowerCase();
+        const pw = qs('#loginPassword').value;
+        const remember = qs('#remember').checked;
+        const msg = qs('#loginMsg'); msg.textContent='';
+        if(!email || !pw){ msg.textContent='Complete email and password.'; return }
+        const users = loadUsers();
+        const user = users[email];
+        if(!user){ msg.textContent='No account found for this email.'; return }
+        const hashed = await sha256Hex(pw);
+        if(hashed !== user.hash){ msg.textContent='Incorrect password.'; return }
+        // login success
+        const session = { email, name: user.name, at: new Date().toISOString() };
+        if(remember) localStorage.setItem('demo_auth_session', JSON.stringify(session));
+        else sessionStorage.setItem('demo_auth_session', JSON.stringify(session));
+        qs('#welcome').textContent = `Hello, ${user.name}! (${email})`;
+        showView('#dashboardView');
+      });
+
+      const existing = JSON.parse(sessionStorage.getItem('demo_auth_session') || localStorage.getItem('demo_auth_session') || 'null');
+      if(existing){ qs('#welcome').textContent = `Hello, ${existing.name}! (${existing.email})`; showView('#dashboardView'); }
+      else showView('#loginView');
+
+      qs('#logout').addEventListener('click', ()=>{
+        sessionStorage.removeItem('demo_auth_session'); localStorage.removeItem('demo_auth_session');
+        qs('#welcome').textContent=''; showView('#loginView');
+      });
+
+      qs('#deleteAccount').addEventListener('click', ()=>{
+        const session = JSON.parse(sessionStorage.getItem('demo_auth_session') || localStorage.getItem('demo_auth_session') || 'null');
+        if(!session) return alert('No active session');
+        if(!confirm('Delete your account permanently from this browser?')) return;
+        const users = loadUsers();
+        delete users[session.email];
+        saveUsers(users);
+        sessionStorage.removeItem('demo_auth_session'); localStorage.removeItem('demo_auth_session');
+        renderUsersList();
+        qs('#welcome').textContent=''; showView('#loginView');
+      });
+
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,385 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+header {
+    background-color: #2e8b57;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+header .logo a {
+    text-decoration: none;
+    font-size: 24px;
+    color: white;
+    font-weight: bold;
+}
+
+.cart-container {
+    width: 90%;
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cart-container h2 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#cart-items {
+    margin-bottom: 20px;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f1f1f1;
+    padding: 12px 0;
+    font-size: 18px;
+}
+
+.cart-item p {
+    margin: 0;
+}
+
+.cart-item button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.cart-item button:hover {
+    background-color: #c0392b;
+}
+
+#cart-items p {
+    font-size: 18px;
+    color: #777;
+    text-align: center;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #2e8b57;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #276c44;
+}
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.payment-card-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+     width: 400px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.payment-card-container h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.payment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+.form-group input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+button {
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+.payment-card-container {
+    background-color: #4A9C80;
+}
+
+ .invoice {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8  px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+ }
+
+ .invoice h2 {
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 20px;
+ }
+
+ .invoice-items {
+    margin-bottom: 20px;
+    flex: 1;
+    overflow: auto;
+ }
+
+ .invoice-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+ }
+
+ .invoice-item-img {
+    width: 60;
+    height: 60px;
+    border-radius: 50%;
+    margin-right: 15px;
+ }
+
+ .invoice-item-details{
+    flex-grow: 1;
+ }
+
+ .invoice-item h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    
+ }
+
+ .invoice-item-quantity {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+ }
+
+ .quantity-btn{
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    color: var(--primary-color);
+    cursor: pointer;
+
+ }
+
+ .quantity-input {
+    width: 30px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+ }
+
+ .invoice-item-price {
+    font-size: 20px;
+    font-weight: bold;
+
+ }
+
+ .pamyment-summary {
+    background-color: #f2f2f2;
+    padding: 15px;
+    border-radius: 10px;
+
+ }
+
+ .payment-summary h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+ }
+
+.summary-detail,
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.summary-total {
+    border-top: 1px dashed #777;
+
+}
+.summary-total p {
+    font-size: 18px;
+    font-weight: bold;
+
+}
+
+.pay-button {
+    background-color: var(--primary-color);
+    color: #fff;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+}
+.modal-content{
+    background-color: white;
+    border-radius: 20px;
+    margin: 10% auto;
+    padding: 40px;
+    width: 540px;
+    height: 540px;
+}
+.modal-content h3{
+    font-size: 24px;
+font-weight: 500;
+margin-bottom: 10px;
+}
+.payment-form{
+    margin-top: 20px;
+}
+.form-group{
+    margin-bottom:15px ;
+}
+.form-group label {
+    display: block;
+}
+.form-group input{
+    border-radius: 5px;
+    border: 1px solid #acacac;
+    width: 100%;
+    padding: 10px;
+    font-size: 18px ;
+}
+.pay-button:hover{
+    background-color: orange;
+}
+.payment-note{
+    font-size: 14px;
+    color: gray;
+    margin-top:15px ;
+}
+
+.succes-modal{
+    display: none;
+    position: fixed;
+    z-index: 100;
+    top:0 ;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color:rgba(0, 0, 0, 0.5) ;
+    justify-content: center;
+    align-items: center;
+
+}    
+.succes-modal .modal-content{
+     padding: 40px 84px 33px ;
+     width: fit-content;
+     height: 300px;
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+}
+ 
+.succes-modal .modal-content h3{
+    font-size: 36px;
+    margin-bottom: 20px;
+    text-wrap: no-wrap;
+}
+ .chekmark{
+    background-color: var(--primary-color);
+    color: #fff;
+   font-size: 40px;
+   width: 100px; 
+   height: 100px;
+   border-radius: 50%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   animation-name: rotate;
+   animation-duration: 5s ;
+ }
+
+ @keyframes  rotate {
+    0%{
+        transform: rotate(35deg);
+    }
+    15%{
+        transform: rotate(-35deg);
+    }
+    30%{
+        transform: rotate(35deg);
+    }
+    45%{
+        transform: rotate(-35deg);
+    }
+    60%{
+        transform: rotate(35deg);
+    }
+    75%{
+        transform: rotate(-35deg);
+    }
+    100%{
+        transform: rotate( 0);
+    }
+ }
